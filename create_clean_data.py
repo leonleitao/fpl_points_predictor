@@ -9,6 +9,8 @@ fixtures=get_data.get_fixtures()
 
 # Getting the current gameweek number
 current_gw=max(set(gws['round']))+1
+# Create dictionary to map team number to team name
+team_dict=dict(players[['team','team_name']].values)
 
 # Filtering player data to only required columns
 players=players[['id_x','first_name','second_name','team','position']]
@@ -43,7 +45,11 @@ df=df[~((df['event']!=current_gw)&(df['total_points'].isna()))]
 # Get the average stats for each player for past gameweeks as well as average for last 2 gameweeks
 df=df.groupby('id_x').apply(lambda x: get_average_stats(x,cols+target_col))
 df=df.groupby('id_x').apply(lambda x: get_average_stats(x,cols+target_col,2))
+# Change team numbers to team names
+df['team']=df['team'].apply(lambda x: team_dict[x])
+df['opposition_team']=df['opposition_team'].apply(lambda x: team_dict[x])
 # Drop these columns as they cannot be used for new predictions
 df=df.drop(cols,axis=1)
+
 
 df.to_csv('data/data.csv',index=False,header=True)
