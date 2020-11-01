@@ -1,8 +1,6 @@
 from flask import Flask,render_template,url_for,request,redirect
-from flask_wtf import FlaskForm
-from wtforms import SelectField
-import os
 import pandas as pd
+
 
 all_players=pd.read_csv('data/predictions.csv').to_dict('records')
 current_gw=all_players[0]['event']
@@ -24,4 +22,4 @@ def predict():
     return render_template('predict.html',title='Points predictor',players=all_players,cgw=int(current_gw),player_id=player_id)
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run()
