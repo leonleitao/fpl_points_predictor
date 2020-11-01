@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import get_data
-from utils_feat_engineering import get_average_stats
 
 players=get_data.get_player_data()
 gws=get_data.get_gameweek_data()
@@ -13,7 +12,7 @@ current_gw=max(set(gws['round']))+1
 team_dict=dict(players[['team','team_name']].values)
 
 # Filtering player data to only required columns
-players=players[['id_x','first_name','second_name','team','position']]
+players=players[['id_x','first_name','second_name','team','position','code']]
 # test=test[(test['id_x']==531)|(test['id_x']==390)|(test['id_x']==569)]
 
 # Filtering the fixtures upto the current list of fixtures
@@ -42,6 +41,17 @@ target_col=['total_points',]
 df=pd.merge(df,gws[['element','round']+cols+target_col],left_on=['id_x','event'],right_on=['element','round'],how='left').drop(['element','round'],axis=1)
 # Removing NA values that result from the merge. These NA's are because of new transfers as the player did not have scores/points for previous gameweeks.
 df=df[~((df['event']!=current_gw)&(df['total_points'].isna()))]
+
+# Function to get the average stats of each player
+def get_average_stats(df,cols,n=None):
+    if n:
+        colnames=['av({})_{}'.format(n,col) for col in cols]
+        df[colnames]=df[cols].shift(1).rolling(n).mean().fillna(0)
+        return df
+    colnames=['av_{}'.format(col) for col in cols]
+    df[colnames]=df[cols].shift(1).expanding().mean().fillna(0)
+    return df
+
 # Get the average stats for each player for past gameweeks as well as average for last 2 gameweeks
 df=df.groupby('id_x').apply(lambda x: get_average_stats(x,cols+target_col))
 df=df.groupby('id_x').apply(lambda x: get_average_stats(x,cols+target_col,2))
@@ -51,5 +61,5 @@ df['opposition_team']=df['opposition_team'].apply(lambda x: team_dict[x])
 # Drop these columns as they cannot be used for new predictions
 df=df.drop(cols,axis=1)
 
-
-df.to_csv('data/data.csv',index=False,header=True)
+# Save dataset as a csv file
+df.to_csv(f'data/data.csv',index=False,header=True)

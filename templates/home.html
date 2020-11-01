@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container-fluid" >
+    <div class="row mt-4 ml-1" >
+        <div class="col-md-4 pt-2" style="color: #38003C;background-color: lightgrey;">
+            
+                <h3>What is FPL?</h3>
+                
+                <p>Fantasy Premier League (FPL) is a game that casts you in the role of a Fantasy manager. You are given the task to pick a squad of real-life players who score points for your team based on their performances in their own matches. 
+                    For more information visit the <a href="https://fantasy.premierleague.com/">official website</a>.
+                </p>
+                <h3>Project objective</h3>
+                
+                <p>The goal of this project is to use machine learning to predict the points that each player will get in the next gameweek. The predictions are primarily based on player performances in the past gameweeks. The predictions can then be used to inform our transfer strategy, i.e buy/sell certain players.
+                    <br>
+                    Check out the point predictions <a href="{{url_for('predict')}}">here.</a>
+                </p>
+            
+        </div>
+        <div class="col-md-8" >
+            <img src="{{url_for('static',filename='fpl-tips.jpg')}}" alt="" style=" margin:auto;display: block;width: 100%;height: 100%;">
+        </div>
+    </div>
+        
+</div>
+{% endblock %}
