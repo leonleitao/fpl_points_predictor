@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container-fluid test" >
+<div class="row mt-2" >
+    <div class="col-md-4" >
+        <div class="container-fluid"  style="background-color: lightgrey;">
+            <div class="row">
+                <h3 class="p-2 col-md-12" style="background: linear-gradient(to right,#02502b, #00ff85);text-align: center;">
+                    Predict Points
+                </h3>
+            </div>
+            <form action="/predict/" method="POST">
+                <div class="form-group">
+                    <label for="player_select">Select player name</label>
+                    <select class="form-control" id="player_select" name="code">
+                        {% for player in players %}
+                            {% if (player_selected and player.code==player_selected.code) %}
+                            <option selected value="{{player.code}}">{{player.first_name}} {{player.second_name}}</option>
+                            {% else %}
+                            <option value="{{player.code}}">{{player.first_name}} {{player.second_name}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                <button type="submit" class="btn btn-success">Get prediction</button>
+            </form>
+            {% if player_id %}
+            <div class="card mb-1 mt-3">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p{{player_id}}.png"
+                            class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{player_selected.first_name}} {{player_selected.second_name}}</h5>
+                            <p class="card-text">Team: {{player_selected.team}}</p>
+                            <p class="card-text">Opposition: {{player_selected.opposition_team}}</p>
+                            <p class="card-text predicted-points"><strong>Predicted points:
+                                    {{player_selected.predicted_points}}</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <hr>
+        </div>
+    </div>
+    <div class="col-md-8 pl-5 pr-5" >
+        <div class="container-fluid"  style="background-color: lightgrey;">
+            <div class="row">
+                <h3 class="p-2 col-md-12" style="background: linear-gradient(to right,#02502b, #00ff85);text-align: center;">
+                    Gameweek {{cgw}}: Highest Predicted Points
+                </h3>
+            </div>
+
+            <div class="row">
+                {% for player in players[:6] %}
+                <div class="col-md-6 col-sm-6">
+                    <div class="card mb-1 mt-1">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p{{player.code}}.png"
+                                    class="card-img" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{player.first_name}} {{player.second_name}}</h5>
+                                    <p class="card-text">Team: {{player.team}}</p>
+                                    <p class="card-text">Opposition: {{player.opposition_team}}</p>
+                                    <p class="card-text predicted-points"><strong>Predicted points:
+                                            {{player.predicted_points}}</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}

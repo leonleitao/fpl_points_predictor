@@ -1,0 +1,58 @@
+html,body {
+    /* overflow-x: hidden; */
+    height: 100%;
+    width: 100%;
+    font-family: 'Roboto',sans-serif;
+    font-size: large;
+    /* background-image: url('liv.jpeg');
+    background-size: cover; */
+}
+
+.navbar-brand img{
+    height: 2.8rem;
+}
+.navbar-brand {
+    font-size: x-large;
+}
+.navbar{
+    font-size: 1.1rem;
+    box-shadow: 0 .5rem .5rem rgba(0, 0, 0, .5);
+}
+.jumbotron {
+    background: linear-gradient(to right,#00ff85, #FBFBFB);
+    padding-left: 0.5rem;
+    padding-top: 0.5rem;
+    margin-bottom: 2rem;
+    margin-top:2rem;
+    border-radius: 0;
+    box-shadow: 0 .5rem .5rem rgba(0, 0, 0, .1);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+/* .card img{
+    
+    object-fit: cover;
+} */
+
+.predicted-points{
+    font-size: 1.1rem;
+}
+
+
+.card-title{
+    padding:0;
+    margin: 0;
+}
+.card-text{
+    padding:0;
+    margin: 0;
+}
+
+
+/* .container-fluid {
+    background: linear-gradient(to right, #f2f2f2, #FBFBFB);
+} */
+
+/* .test{
+    margin-top: 10rem;
+} */
