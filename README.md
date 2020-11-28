@@ -13,13 +13,13 @@ Three api urls were used
 <li>Fixtures: 'https://fantasy.premierleague.com/api/fixtures/'
 <li>Gameweek data: 'https://fantasy.premierleague.com/api/element-summary/[player_id]/'
 <br>
-<br>
 
 ## Flask app
 A simple flask app was built that shows the players with the highest predicted points for the gameweek (top 6). It also allows the user to find the predicted points for a specific player using a dropdown menu
-The web application was deployed using heroku and is available at  <a href="https://fpl-points-predictor.herokuapp.com">fpl-points-predictor.herokuapp.com</a>
+The web application was deployed using heroku and is available at 
+<a href="https://fpl-points-predictor.herokuapp.com">fpl-points-predictor.herokuapp.com</a>
 
-<img src = 'flask_app.PNG' style="width:50%">
+<img src = 'static/fpl_app.PNG' style="width:70%">
 
 ## Tools used
 
