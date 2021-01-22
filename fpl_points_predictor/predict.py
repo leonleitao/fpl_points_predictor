@@ -17,6 +17,7 @@ def make_prediction()->list:
     preds=model.predict(features)
     predictions=data.copy()[['event','first_name', 'second_name', 'team', 'position','opposition_team','code']]
     predictions['predicted_points']=np.round(preds).astype(int)
+    predictions=predictions.drop_duplicates()
     predictions=predictions.to_dict('records')
     predictions=sorted(predictions, key=lambda k: k['first_name']) 
     return predictions
