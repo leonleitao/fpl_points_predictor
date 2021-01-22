@@ -1,10 +1,12 @@
-from fpl_points_predictor.config import config
-from fpl_points_predictor.processing import processing as pr
 import pandas as pd
 import numpy as np
 import joblib
 
-def make_prediction():
+from fpl_points_predictor.config import config
+from fpl_points_predictor.processing import processing as pr
+
+def make_prediction()->list:
+    """Make point predictions for the upcoming gameweek"""
     data=pd.read_csv(config.DATASET_DIR/config.DATASET_NAME)
     data=data[data['event']==config.CURRENT_GW]
     data=pr.convert_to_categorical(data,config.CATEGORICAL_COLS)
@@ -19,8 +21,8 @@ def make_prediction():
     predictions=sorted(predictions, key=lambda k: k['first_name']) 
     return predictions
 
-def top_n_players(predictions,n):
-    # Players with highest predicted points
+def top_n_players(predictions,n)->list:
+    """Filter the predictions for the top n players"""
     predictions=sorted(predictions, key=lambda k: k['predicted_points'],reverse=True) 
     return (predictions[:n])
 

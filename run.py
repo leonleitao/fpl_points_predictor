@@ -1,5 +1,6 @@
 from flask import Flask,render_template,url_for,request,redirect
 import pandas as pd
+
 from fpl_points_predictor.predict import make_prediction,top_n_players
 from fpl_points_predictor.config import config
 

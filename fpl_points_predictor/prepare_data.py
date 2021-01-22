@@ -5,7 +5,7 @@ import requests
 from fpl_points_predictor.config import config
 from fpl_points_predictor.processing import feature_engineering as fe
 
-def get_player_data():
+def get_player_data() -> pd.DataFrame:
     '''Connects to FPL api and returns a dataframe with player data'''
     # Make an api call
     url = config.API_URL_PLAYERS
@@ -23,7 +23,7 @@ def get_player_data():
     players=players.rename(columns={'short_name':'team_name'})
     return players
 
-def get_fixtures():
+def get_fixtures() -> pd.DataFrame:
     '''Connects to FPL api and returns a dataframe with game fixtures '''
     # Make an api call
     url=config.API_URL_FIXTURES
@@ -33,7 +33,7 @@ def get_fixtures():
     fixtures=pd.DataFrame(json)
     return fixtures
 
-def get_gameweek_data():
+def get_gameweek_data() -> pd.DataFrame:
     '''Connects to FPL api and returns a dataframe with player data for each gameweek'''
     gws=pd.DataFrame()
     # Makes an api call for each player with their player id and concatenates the dataframes
@@ -46,6 +46,7 @@ def get_gameweek_data():
     return gws
 
 def download_and_clean_data():
+    """Collects and filters data from the fantasy api"""
     players = get_player_data()
     # Create dictionary to map team number to team name
     team_dict=dict(players[['team','team_name']].values)
@@ -67,7 +68,8 @@ def download_and_clean_data():
 
     return (players,fixtures,gws,team_dict)
 
-def add_features(players,fixtures,gws,team_dict):
+def add_features(players,fixtures,gws,team_dict) -> pd.DataFrame:
+    """Merges and adds some custom features to the datasets"""
     df = fe.add_home_flag(players,fixtures)
     df = fe.add_opposition_team(df)
 
@@ -84,8 +86,6 @@ def add_features(players,fixtures,gws,team_dict):
     # Get the average stats for each player for past gameweeks as well as average for last 3 gameweeks
     df=df.groupby('id_x').apply(lambda x: fe.get_average_stats(x,cols+target_col))
     df=df.groupby('id_x').apply(lambda x: fe.get_average_stats(x,cols+target_col,3))
-
-    
     # Change team numbers to team names
     df=fe.change_team_number_to_name(df,team_dict)
 
@@ -93,7 +93,8 @@ def add_features(players,fixtures,gws,team_dict):
     df=df.drop(cols,axis=1)
     return df
 
-def save_data(df):
+def save_data(df) -> None:
+    '''Saves the cleaned data as .csv'''
     filedir=config.DATASET_DIR / config.DATASET_NAME
     df.to_csv(filedir,index=False,header=True)
     return None

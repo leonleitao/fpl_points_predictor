@@ -1,10 +1,12 @@
-from fpl_points_predictor.config import config
-from fpl_points_predictor.processing import processing as pr
 import pandas as pd
 import lightgbm as lgb
 import joblib
 
+from fpl_points_predictor.config import config
+from fpl_points_predictor.processing import processing as pr
+
 def run_training():
+    """Trains a lightbgm model on the data and saves it as a pickle file"""
     data=pd.read_csv(config.DATASET_DIR/config.DATASET_NAME)
 
     data=data[data['event']<config.CURRENT_GW]
