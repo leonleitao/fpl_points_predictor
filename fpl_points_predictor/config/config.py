@@ -13,7 +13,7 @@ API_URL_PLAYER_GW = 'https://fantasy.premierleague.com/api/element-summary/'
 DATASET_NAME='fpl_data.csv'
 TRAINED_MODEL_NAME='model.pkl'
 
-CURRENT_GW = 19
+CURRENT_GW = 20
 NUM_PLAYERS = 574
 CATEGORICAL_COLS=['first_name', 'second_name', 'position','id_x','team','is_home', 'opposition_team']
 DROP_COLS=['event','total_points','first_name','second_name','code','av_value','av(3)_value']
